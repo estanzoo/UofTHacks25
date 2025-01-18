@@ -7,11 +7,14 @@
 
 import SwiftUI
 import UIKit
+import Foundation
+
 
 let bgColor: Color = Color("Dark")
 let topBarColor: Color = Color("DarkChange")
 let botBarColor: Color = Color("DarkChange")
 let lineWidth: CGFloat = 2
+var alarmP: Bool = true
 
 struct TopBarView: View {
     @State var displayName: String = ""
@@ -35,12 +38,13 @@ struct TopBarView: View {
 }
 
 struct TransitionView: View {
+    @Binding var alarmP: Bool
     var body: some View {
         VStack (spacing: 0) {
             Rectangle().frame(height: lineWidth).foregroundStyle(.white)
             HStack(spacing: 0) {
                 Button(action: {
-                    print("hi")
+                    alarmP = true
                 }) {
                     ZStack() {
                         Rectangle().foregroundStyle(botBarColor)
@@ -51,7 +55,8 @@ struct TransitionView: View {
                 Rectangle().frame(width: lineWidth).foregroundStyle(.white)
 
                 Button(action: {
-                    GroupView()//my edit
+                    alarmP = false
+                    //GroupView()//my edit
                 }) {
                     ZStack() {
                         Rectangle().foregroundStyle(botBarColor)
@@ -66,16 +71,24 @@ struct TransitionView: View {
 }
 
 struct ContentView: View {
+    @State private var alarmP: Bool = true
     let topBarView = TopBarView()
-    let transitionView = TransitionView()
     let alarmPage = AlarmView()
+    let groupPage = GroupView()
     
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
                 topBarView
-                alarmPage
-                transitionView
+                if (alarmP)
+                {
+                    alarmPage
+                }
+                else
+                {
+                    groupPage
+                }
+                TransitionView(alarmP: $alarmP)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .ignoresSafeArea(.all)
@@ -83,6 +96,12 @@ struct ContentView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea(.all)
         .background(bgColor)
+        .onAppear {
+            let currentHour = Calendar.current.component(.hour, from: Date())
+            let currentMinute = Calendar.current.component(.minute, from: Date())
+            scheduleAlarm(hour: currentHour, minute: currentMinute,  title: "Alarm", body: "Wek up")
+            printAlarms()
+        }
     }
 }
 

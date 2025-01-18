@@ -37,7 +37,7 @@ struct AlarmView: View {
                 
                 Picker("Hour:", selection: $curMinute) {
                     ForEach(minutes, id: \.self) { minute in
-                        Text("\(minute)")
+                        Text(String(format: "%02d", minute))
                             .tag(minute)
                             .foregroundStyle(.white)
                             .font(.system(size: 32, weight: .semibold))
