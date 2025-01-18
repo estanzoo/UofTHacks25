@@ -11,11 +11,12 @@ import UIKit
 let bgColor: Color = Color("Dark")
 let topBarColor: Color = Color("DarkChange")
 let botBarColor: Color = Color("DarkChange")
+let lineWidth: CGFloat = 2
 
 struct TopBarView: View {
     @State var displayName: String = ""
     var body: some View {
-        VStack() {
+        VStack(spacing: 0) {
             Spacer().frame(height: 40)
             ZStack() {
                 TextField("Display Name", text:$displayName, prompt: Text("Display Name").foregroundStyle(Color("ExtraDark")))
@@ -25,8 +26,8 @@ struct TopBarView: View {
                     .foregroundStyle(.white)
                     .multilineTextAlignment(.center)
             }
+            Rectangle().frame(height: lineWidth).foregroundStyle(.white)
         }
-        .padding()
         .background(topBarColor)
         .frame(width: .infinity, height: 150)
     }
@@ -35,7 +36,7 @@ struct TopBarView: View {
 struct TransitionView: View {
     var body: some View {
         VStack (spacing: 0) {
-            Rectangle().frame(height: 2).foregroundStyle(.white)
+            Rectangle().frame(height: lineWidth).foregroundStyle(.white)
             HStack(spacing: 0) {
                 Button(action: {
                     print("hi")
@@ -46,7 +47,7 @@ struct TransitionView: View {
                     }
                 }
                 
-                Rectangle().frame(width: 2).foregroundStyle(.white)
+                Rectangle().frame(width: lineWidth).foregroundStyle(.white)
 
                 Button(action: {
                     print("no")
