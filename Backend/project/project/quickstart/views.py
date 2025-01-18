@@ -1,8 +1,16 @@
 from django.shortcuts import render
-from rest_framework import serializers
-from .models import User
+from django.http import JsonResponse
+from .models import User, Group
+from .serializers import UserSerializer
 
 # Create your views here.
 
-class RegisterUserSerializer (serializers.Serializer):
-    
+def user_list(request):
+    users = User.objects.all()
+    serializer = UserSerializer (users, many=True)
+    return JsonResponse (serializer.data)
+
+def group_list(request):
+    groups = Group.objects.all()
+    serializer = UserSerializer (groups, many=True)
+    return JsonResponse (serializer.data)
