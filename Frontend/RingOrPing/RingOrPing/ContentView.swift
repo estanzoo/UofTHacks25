@@ -51,7 +51,7 @@ struct TransitionView: View {
                 Rectangle().frame(width: lineWidth).foregroundStyle(.white)
 
                 Button(action: {
-                    print("no")
+                    GroupView()//my edit
                 }) {
                     ZStack() {
                         Rectangle().foregroundStyle(botBarColor)
