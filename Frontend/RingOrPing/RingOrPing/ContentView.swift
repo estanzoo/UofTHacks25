@@ -68,12 +68,13 @@ struct TransitionView: View {
 struct ContentView: View {
     let topBarView = TopBarView()
     let transitionView = TransitionView()
+    let alarmPage = AlarmView()
     
     var body: some View {
         ZStack {
-            VStack() {
+            VStack(spacing: 0) {
                 topBarView
-                Spacer()
+                alarmPage
                 transitionView
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
