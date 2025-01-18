@@ -12,5 +12,5 @@ def user_list(request):
 
 def group_list(request):
     groups = Group.objects.all()
-    serializer = UserSerializer (groups, many=True)
+    serializer = GroupSerializer (groups, many=True)
     return JsonResponse (serializer.data)
