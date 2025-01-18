@@ -39,3 +39,33 @@ def group_list(request):
             return Response(serializer.data, status = status.HTTP_201_CREATED)
         else:
             return Response (status = status.HTTP_400_BAD_REQUEST)
+        
+@api_view(['ADD'])
+def add_user_to_group(user_id, group_id):
+    try:
+        group = Group.objects.get(id=group_id)
+
+        if group.members.contains(id=user_id):
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        group.members.add(id=user_id)
+        return Response(status=status.HTTP_200_OK)
+    except Group.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    
+@api_view(['REMOVE'])
+def remove_user_from_group(user_id, group_id):
+    try:
+        group = Group.objects.get(id=group_id)
+        
+        if group.members.contains(id=user_id):
+            group.members.remove(id=user_id)
+            return Response(status=status.HTTP_200_OK)
+        
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    except Group.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
