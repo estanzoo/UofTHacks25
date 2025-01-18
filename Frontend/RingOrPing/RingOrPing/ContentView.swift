@@ -38,6 +38,7 @@ struct TopBarView: View {
 }
 
 struct TransitionView: View {
+    @Binding var alarmP: Bool
     var body: some View {
         VStack (spacing: 0) {
             Rectangle().frame(height: lineWidth).foregroundStyle(.white)
@@ -72,7 +73,6 @@ struct TransitionView: View {
 struct ContentView: View {
     @State private var alarmP: Bool = true
     let topBarView = TopBarView()
-    let transitionView = TransitionView()
     let alarmPage = AlarmView()
     let groupPage = GroupView()
     
@@ -88,7 +88,7 @@ struct ContentView: View {
                 {
                     groupPage
                 }
-                TransitionView()
+                TransitionView(alarmP: $alarmP)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .ignoresSafeArea(.all)
