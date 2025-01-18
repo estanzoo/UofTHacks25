@@ -9,7 +9,7 @@ import UserNotifications
 func requestNotificationPermission() {
     UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
         if granted {
-            print("Permission granted!!")
+            print("Permission granted")
         } else {
             print("Permission denied")
         }
@@ -20,7 +20,7 @@ func scheduleAlarm(hour: Int, minute: Int, title: String, body: String) {
     let content = UNMutableNotificationContent()
     content.title = title
     content.body = body
-    content.sound = UNNotificationSound.defaultCritical
+    content.sound = UNNotificationSound(named: UNNotificationSoundName(rawValue: "alarm.wav"))
     
     var dateComponents = DateComponents()
     dateComponents.hour = hour
