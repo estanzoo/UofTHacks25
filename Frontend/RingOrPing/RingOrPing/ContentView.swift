@@ -29,7 +29,8 @@ struct TopBarView: View {
             Rectangle().frame(height: lineWidth).foregroundStyle(.white)
         }
         .background(topBarColor)
-        .frame(width: .infinity, height: 150)
+        .frame(maxWidth: .infinity)
+        .frame(height: 150)
     }
 }
 
@@ -59,7 +60,8 @@ struct TransitionView: View {
                 }
             }
         }
-        .frame(width: .infinity, height: 100)
+        .frame(maxWidth: .infinity)
+        .frame(height: 100)
     }
 }
 
