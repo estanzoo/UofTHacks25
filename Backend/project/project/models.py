@@ -11,4 +11,4 @@ class Group (models.Model):
     display_name = models.CharField (max_length=255)
     group_id = models.CharField (max_length=255, unique=True)
     join_code = models.CharField (max_length=6, unique=True)
-    members = models.ManyToManyField(User)
+    members = models.ManyToManyField(User, related_name='users')
