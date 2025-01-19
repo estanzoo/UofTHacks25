@@ -4,7 +4,7 @@ from .models import User, Group
 class UserSerializer (serializers.ModelSerializer):
     class Meta: 
         model = User
-        fields = ['display_name', 'user_id']
+        fields = ['display_name', 'user_id', 'phone_number']
 
 class GroupSerializer (serializers.ModelSerializer):
     class Meta: 

@@ -1,10 +1,12 @@
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 import uuid
 
 # Create your models here.
 class User (models.Model):
     display_name = models.CharField(max_length=255)
     user_id = models.CharField(max_length=255, unique=True)
+    phone_number = PhoneNumberField(null=False, blank=False, unique=True)
 
 
 class Group (models.Model):
