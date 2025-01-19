@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import Combine
 
 struct CancelView: View {
     @State private var timeLeft: TimeInterval = 0
-    
+    @State private var updateClock: Cancellable?
     
     var body: some View {
         Button(action: {
@@ -17,7 +18,7 @@ struct CancelView: View {
             print("Removed Failure!")
         }) {
             VStack {
-                // Text("\($timeLeft) seconds left!")
+                Text("\(Int(timeLeft)) seconds left!")
                 ZStack {
                     Rectangle()
                         .frame(width: 100, height: 40)
@@ -26,6 +27,14 @@ struct CancelView: View {
                     Text("Cancel!").foregroundStyle(.white)
                 }
             }
+        }.onAppear {
+            updateClock = Timer.publish(every: 1, on: .main, in: .common)
+                        .autoconnect()
+                        .sink { _ in
+                            updateTime()
+                        }
+        }.onDisappear {
+            updateClock?.cancel()
         }
     }
     

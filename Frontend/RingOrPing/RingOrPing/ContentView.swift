@@ -143,7 +143,7 @@ struct ContentView: View {
                 }
                 onTimer = found;
             }
-        }
+    }
 }
 
 #Preview {
