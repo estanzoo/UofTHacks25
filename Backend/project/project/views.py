@@ -72,7 +72,10 @@ def remove_user_from_group(user_id, group_id):
     except User.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     
-def query_view(request):
-    query = request.GET.get('query', 'No query provided')
-    return HttpResponse(f"Received query: {query}")
-
+@api_view(['GET'])
+def get_user_info(user_id):
+    try:
+        user_info = User.objects.get(user_id=user_id)
+        return JsonResponse(user_info)
+    except User.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
