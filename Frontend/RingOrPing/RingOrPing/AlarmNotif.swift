@@ -8,6 +8,7 @@ import UserNotifications
 
 let triggerKey = "curTrigger"
 let failureId = "ring_or_ping_failure"
+let lastAlarmKey = "lastAlarm"
 let graceTime: TimeInterval = 30
 
 func requestNotificationPermission() {
@@ -71,7 +72,17 @@ func alarmTriggered() {
     let alTime = Date()
     let failTime = alTime.addingTimeInterval(graceTime)
     print("Alarm triggered.. scheduling failure for \(failTime)")
-    scheduleFailure(date: failTime)
+    
+    let last = UserDefaults.standard.value(forKey: lastAlarmKey)
+    if let time = last as? Date {
+        if time.timeIntervalSinceNow > 10 {
+            scheduleFailure(date: failTime)
+            UserDefaults.standard.set(Date(), forKey: lastAlarmKey)
+        }
+    } else {
+        scheduleFailure(date: failTime)
+        UserDefaults.standard.set(Date(), forKey: lastAlarmKey)
+    }
 }
 
 func failureTriggered() {

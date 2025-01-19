@@ -10,13 +10,14 @@ import SwiftUI
 struct CancelView: View {
     @State private var timeLeft: TimeInterval = 0
     
+    
     var body: some View {
         Button(action: {
             UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [failureId])
             print("Removed Failure!")
         }) {
             VStack {
-                Text("\($timeLeft) seconds left!")
+                // Text("\($timeLeft) seconds left!")
                 ZStack {
                     Rectangle()
                         .frame(width: 100, height: 40)
