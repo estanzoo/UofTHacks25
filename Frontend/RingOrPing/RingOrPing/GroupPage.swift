@@ -14,7 +14,8 @@ struct GroupView: View
 {
     @Binding var createP: Bool
     @Binding var joinP: Bool
-
+    @Binding var gListP: Bool
+    
     var body: some View
     {
         VStack (spacing: 0)
@@ -50,7 +51,7 @@ struct GroupView: View
             ForEach(1...5, id: \.self)//replace 5 with number of groups
             { i in
                 Button(action: {
-                    print("diarrhea")
+                    gListP = true
                 })
                 {
                     ZStack (alignment: .topLeading)

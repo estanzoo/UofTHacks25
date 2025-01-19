@@ -51,7 +51,9 @@ struct CreateView: View
                                     {
                                         Rectangle().frame(width: 140, height: 40).foregroundStyle(.red).cornerRadius(20)
                                     }
-                                    Text("Create").foregroundStyle(.black).font(.system(size: 24))
+                                        Text("Create").foregroundStyle(.black).font(.system(size: 24))
+                                        Spacer()
+                                      
                                 }
                             }
                         }
