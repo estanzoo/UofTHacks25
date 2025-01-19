@@ -4,6 +4,6 @@ from .models import User, Group
 
 class UserProfileAdmin(admin.ModelAdmin):
     # Explicitly list fields you want to show in the admin form
-    fields = ['display_name', 'user_id', 'phone_number']  # Ensure phone_number is included
+    fields = ['display_name', 'user_idadadd', 'phone_number']  # Ensure phone_number is included
 
 admin.site.register(User, UserProfileAdmin)
