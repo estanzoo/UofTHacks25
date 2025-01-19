@@ -19,7 +19,15 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        print("bloop")
-        completionHandler([.alert, .sound])
+        
+        if notification.request.identifier == alarm_id{
+            alarmTriggered()
+            completionHandler([.alert, .sound])
+        }
+        
+        if notification.request.identifier == failureId {
+            failureTriggered();
+            completionHandler([.alert, .sound])
+        }
     }
 }
