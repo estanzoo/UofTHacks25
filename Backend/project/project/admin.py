@@ -10,6 +10,6 @@ admin.site.register(User, UserProfileAdmin)
 
 class GroupProfileAdmin(admin.ModelAdmin):
     # Explicitly list fields you want to show in the admin form
-    fields = ['display_name', 'group_id', 'joi_code', 'members']  # Ensure phone_number is included
+    fields = ['display_name', 'group_id', 'join_code', 'members']  # Ensure phone_number is included
 
 admin.site.register(Group, GroupProfileAdmin)
