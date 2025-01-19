@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "project",
     "rest_framework",
     "phonenumber_field",
-"
+
 ]
 
 MIDDLEWARE = [
