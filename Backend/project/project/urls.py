@@ -22,5 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path ('users/', views.user_list),
     path ('groups/', views.group_list),
-    path('user_info/', views.get_user_info)
+    path('add-user-to-group/', views.add_user_to_group),
+    path('remove-user-from-group/', views.remove_user_from_group),
+    path('new-user/', views.create_user),
+    path('get-user/', views.create_user)
 ]

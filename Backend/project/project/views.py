@@ -41,24 +41,27 @@ def group_list(request):
         else:
            return Response (status = status.HTTP_400_BAD_REQUEST)
         
-@api_view(['ADD'])
-def add_user_to_group(user_id, group_id):
+@api_view(['POST'])
+def add_user_to_group(request):
     try:
-        group = Group.objects.get(id=group_id)
+        group = Group.objects.get(id=request.POST.get("group_id"))
         print("adding user...")
 
-        if group.members.contains(id=user_id):
+        if group.members.contains(id=request.POST.get("user_id")):
            return Response(status=status.HTTP_400_BAD_REQUEST)
         
-        group.members.add(id=user_id)
+        group.members.add(id=request.POST.get("user_id"))
         return Response(status=status.HTTP_200_OK)
     except Group.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     except User.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     
-@api_view(['REMOVE'])
-def remove_user_from_group(user_id, group_id):
+@api_view(['POST'])
+def remove_user_from_group(request):
+    group_id = request.POST.get("group_id")
+    user_id = request.POST.get("user_id")
+
     try:
         group = Group.objects.get(id=group_id)
         
@@ -72,10 +75,27 @@ def remove_user_from_group(user_id, group_id):
     except User.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
     
-@api_view(['GET'])
-def get_user_info(user_id):
+@api_view(['POST'])
+def get_user_info(request):
     try:
-        user_info = User.objects.get(user_id=user_id)
-        return JsonResponse(user_info)
+        user = User.objects.get(id=request.POST.get("user_id"))
+        user_info = UserSerializer(user)
+
+        return JsonResponse(user_info.data)
     except User.DoesNotExist:
         return Response(status=status.HTTP_404_NOT_FOUND)
+    
+@api_view(['POST'])
+def create_user(request):
+    if request.method == "POST":
+        user_id = request.POST.get("user_id")
+        name = request.POST.get("display_name", "John Doe")
+        phone_number = request.POST.get("phone_number", "+123456789")
+
+        user = User.objects.create(user_id=user_id, display_name=name, phone_number=phone_number)
+
+        user.save()
+
+        return Response(status=status.HTTP_201_CREATED)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
