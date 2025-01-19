@@ -16,6 +16,7 @@ let botBarColor: Color = Color("DarkChange")
 let lineWidth: CGFloat = 2
 var alarmP: Bool = true
 var createP: Bool = false
+var gListP: Bool = false
 
 struct TopBarView: View {
     @State var displayName: String = ""
@@ -74,6 +75,7 @@ struct ContentView: View {
     @State private var alarmP: Bool = true
     @State private var createP: Bool = false
     @State private var joinP: Bool = false
+    @State private var gListP: Bool = false
     let topBarView = TopBarView()
     let alarmPage = AlarmView()
     
@@ -87,11 +89,9 @@ struct ContentView: View {
                 }
                 else
                 {
-                    GroupView(createP: $createP, joinP: $joinP)
-                        
+                    GroupView(createP: $createP, joinP: $joinP, gListP: $gListP)
                 }
                 TransitionView(alarmP: $alarmP)
-                
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .ignoresSafeArea(.all)
@@ -102,6 +102,10 @@ struct ContentView: View {
             if(joinP == true)
             {
                 JoinView(joinP: $joinP)
+            }
+            if(gListP == true)
+            {
+                GListView(gListP: $gListP)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
