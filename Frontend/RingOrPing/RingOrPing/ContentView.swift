@@ -107,12 +107,6 @@ struct ContentView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea(.all)
         .background(bgColor)
-        .onAppear {
-            let currentHour = Calendar.current.component(.hour, from: Date())
-            let currentMinute = Calendar.current.component(.minute, from: Date())
-            scheduleAlarm(hour: currentHour, minute: currentMinute,  title: "Alarm", body: "Wek up")
-            printAlarms()
-        }
     }
 }
 
