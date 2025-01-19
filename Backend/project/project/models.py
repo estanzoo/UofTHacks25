@@ -6,7 +6,7 @@ import uuid
 class User (models.Model):
     display_name = models.CharField(max_length=255)
     user_id = models.CharField(max_length=255, unique=True)
-    phone_number = PhoneNumberField(null=False, blank=False, unique=True)
+    phone_number = PhoneNumberField(unique=True)
 
 
 class Group (models.Model):
