@@ -21,5 +21,6 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path ('users/', views.user_list),
-    path ('groups/', views.group_list)
+    path ('groups/', views.group_list),
+    path('query/', views.query_view, name='query_view')
 ]

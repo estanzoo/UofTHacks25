@@ -29,9 +29,32 @@
 		9607ACF82D3B792800E5606B /* RingOrPingUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RingOrPingUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		9607AD2E2D3C66C200E5606B /* Exceptions for "RingOrPing" folder in "RingOrPingTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				alarm.wav,
+				alarmlong.wav,
+			);
+			target = 9607ACED2D3B792800E5606B /* RingOrPingTests */;
+		};
+		9607AD2F2D3C66C200E5606B /* Exceptions for "RingOrPing" folder in "RingOrPingUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				alarm.wav,
+				alarmlong.wav,
+			);
+			target = 9607ACF72D3B792800E5606B /* RingOrPingUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		9607ACE02D3B792500E5606B /* RingOrPing */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				9607AD2E2D3C66C200E5606B /* Exceptions for "RingOrPing" folder in "RingOrPingTests" target */,
+				9607AD2F2D3C66C200E5606B /* Exceptions for "RingOrPing" folder in "RingOrPingUITests" target */,
+			);
 			path = RingOrPing;
 			sourceTree = "<group>";
 		};
