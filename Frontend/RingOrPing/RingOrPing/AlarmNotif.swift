@@ -24,7 +24,7 @@ func scheduleAlarm(hour: Int, minute: Int, title: String, body: String) {
     
     var dateComponents = DateComponents()
     dateComponents.hour = hour
-    dateComponents.minute = minute + 1
+    dateComponents.minute = minute
     let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents,
         repeats: true
     )
