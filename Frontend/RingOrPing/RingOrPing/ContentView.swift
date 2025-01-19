@@ -15,6 +15,7 @@ let topBarColor: Color = Color("DarkChange")
 let botBarColor: Color = Color("DarkChange")
 let lineWidth: CGFloat = 2
 var alarmP: Bool = true
+var createP: Bool = false
 
 struct TopBarView: View {
     @State var displayName: String = ""
@@ -56,7 +57,6 @@ struct TransitionView: View {
 
                 Button(action: {
                     alarmP = false
-                    //GroupView()//my edit
                 }) {
                     ZStack() {
                         Rectangle().foregroundStyle(botBarColor)
@@ -72,9 +72,10 @@ struct TransitionView: View {
 
 struct ContentView: View {
     @State private var alarmP: Bool = true
+    @State private var createP: Bool = false
+    @State private var joinP: Bool = false
     let topBarView = TopBarView()
     let alarmPage = AlarmView()
-    let groupPage = GroupView()
     
     var body: some View {
         ZStack {
@@ -86,12 +87,22 @@ struct ContentView: View {
                 }
                 else
                 {
-                    groupPage
+                    GroupView(createP: $createP, joinP: $joinP)
+                        
                 }
                 TransitionView(alarmP: $alarmP)
+                
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .ignoresSafeArea(.all)
+            if (createP == true)
+            {
+                CreateView(createP: $createP)
+            }
+            if(joinP == true)
+            {
+                JoinView(joinP: $joinP)
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea(.all)

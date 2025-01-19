@@ -12,6 +12,9 @@ let buttonColor: Color = Color("Light2")
 
 struct GroupView: View
 {
+    @Binding var createP: Bool
+    @Binding var joinP: Bool
+
     var body: some View
     {
         VStack (spacing: 0)
@@ -20,7 +23,7 @@ struct GroupView: View
             {
                 //Spacer().frame(width: 5, height: 1)
                 Button(action: {
-                    print("pp")
+                    createP = true
                 })
                 {
                     ZStack ()
@@ -31,7 +34,7 @@ struct GroupView: View
                 }
                 Spacer().frame(width: 20, height: 1)
                 Button(action: {
-                    print("poo")
+                    joinP = true
                 })
                 {
                     ZStack()
