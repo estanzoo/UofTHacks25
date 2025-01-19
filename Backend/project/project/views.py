@@ -78,7 +78,7 @@ def remove_user_from_group(request):
 @api_view(['POST'])
 def get_user_info(request):
     try:
-        user = User.objects.get(id=request.POST.get("user_id"))
+        user = User.objects.get(user_id=request.POST.get("user_id"))
         user_info = UserSerializer(user)
 
         return JsonResponse(user_info.data)
@@ -90,7 +90,7 @@ def create_user(request):
     if request.method == "POST":
         user_id = request.POST.get("user_id")
         name = request.POST.get("display_name", "John Doe")
-        phone_number = request.POST.get("phone_number", "+123456789")
+        phone_number = request.POST.get("phone_number", "+1234567890")
 
         user = User.objects.create(user_id=user_id, display_name=name, phone_number=phone_number)
 
