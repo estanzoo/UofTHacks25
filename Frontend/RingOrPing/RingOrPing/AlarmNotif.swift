@@ -6,6 +6,10 @@
 //
 import UserNotifications
 
+let triggerKey = "curTrigger"
+let failureId = "ring_or_ping_failure"
+let graceTime: TimeInterval = 30
+
 func requestNotificationPermission() {
     UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
         if granted {
@@ -24,12 +28,13 @@ func scheduleAlarm(hour: Int, minute: Int, title: String, body: String) {
     
     var dateComponents = DateComponents()
     dateComponents.hour = hour
-    dateComponents.minute = minute + 1
+    dateComponents.minute = minute
+    dateComponents.second = 0
     let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents,
         repeats: true
     )
     
-    let request = UNNotificationRequest(identifier: "ring_or_ping_wakeup_alarm", content: content, trigger: trigger)
+    let request = UNNotificationRequest(identifier: alarm_id, content: content, trigger: trigger)
     
     UNUserNotificationCenter.current().add(request) { error in
         if let error = error {
@@ -38,6 +43,41 @@ func scheduleAlarm(hour: Int, minute: Int, title: String, body: String) {
             print("Alarm scheduled for hour=\(dateComponents.hour) and minute=\(dateComponents.minute)")
         }
     }
+}
+
+func scheduleFailure(date: Date) {
+    let content = UNMutableNotificationContent()
+    content.title = "Failure Sent"
+    content.body = "Guess who's a lazy bum ;)"
+    content.sound = UNNotificationSound.defaultRingtone
+    
+    let dateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
+    let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents,
+        repeats: false
+    )
+    
+    let request = UNNotificationRequest(identifier: failureId, content: content, trigger: trigger)
+    
+    UNUserNotificationCenter.current().add(request) { error in
+        if let error = error {
+            print("Error scheduling trigger: \(error)")
+        } else {
+            print("Trigger scheduled for \(date)")
+        }
+    }
+}
+
+func alarmTriggered() {
+    let alTime = Date()
+    let failTime = alTime.addingTimeInterval(graceTime)
+    print("Alarm triggered.. scheduling failure for \(failTime)")
+    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [alarm_id])
+    scheduleFailure(date: failTime)
+}
+
+func failureTriggered() {
+    print("Oh no! Failed!")
+    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [failureId])
 }
 
 func printAlarms(){
