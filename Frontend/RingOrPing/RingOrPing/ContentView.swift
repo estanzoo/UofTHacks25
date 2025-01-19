@@ -8,7 +8,7 @@
 import SwiftUI
 import UIKit
 import Foundation
-
+import Combine
 
 let bgColor: Color = Color("Dark")
 let topBarColor: Color = Color("DarkChange")
@@ -72,46 +72,78 @@ struct TransitionView: View {
 }
 
 struct ContentView: View {
+    @State private var onTimer: Bool = false
+    @State private var timeChecker: Cancellable?
+    
     @State private var alarmP: Bool = true
     @State private var createP: Bool = false
     @State private var joinP: Bool = false
     @State private var gListP: Bool = false
+    
     let topBarView = TopBarView()
     let alarmPage = AlarmView()
     
     var body: some View {
         ZStack {
-            VStack(spacing: 0) {
-                topBarView
-                if (alarmP)
-                {
-                    alarmPage
+            if onTimer {
+                CancelView()
+            } else {
+                VStack(spacing: 0) {
+                    topBarView
+                    if (alarmP)
+                    {
+                        alarmPage
+                    }
+                    else
+                    {
+                        GroupView(createP: $createP, joinP: $joinP, gListP: $gListP)
+                    }
+                    TransitionView(alarmP: $alarmP)
                 }
-                else
-                {
-                    GroupView(createP: $createP, joinP: $joinP, gListP: $gListP)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .ignoresSafeArea(.all)
+                if (createP == true) {
+                    CreateView(createP: $createP)
                 }
-                TransitionView(alarmP: $alarmP)
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .ignoresSafeArea(.all)
-            if (createP == true)
-            {
-                CreateView(createP: $createP)
-            }
-            if(joinP == true)
-            {
-                JoinView(joinP: $joinP)
-            }
-            if(gListP == true)
-            {
-                GListView(gListP: $gListP)
+                if(joinP == true) {
+                    JoinView(joinP: $joinP)
+                }
+                if(gListP == true) {
+                    GListView(gListP: $gListP)
+                }
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .ignoresSafeArea(.all)
         .background(bgColor)
+        .onDisappear {
+            timeChecker?.cancel()
+        }
+        .onAppear {
+            startTimer()
+        }
     }
+    
+    func startTimer() {
+        timeChecker = Timer.publish(every: 1, on: .main, in: .common)
+                    .autoconnect()
+                    .sink { _ in
+                        checkForScheduledNotifications()
+                    }
+    }
+    
+    func checkForScheduledNotifications() {
+        UNUserNotificationCenter.current().getPendingNotificationRequests {
+                requests in
+                var found = false
+                for request in requests {
+                    if request.identifier == failureId {
+                        found = true
+                    }
+                }
+                onTimer = found;
+            }
+        }
 }
 
 #Preview {

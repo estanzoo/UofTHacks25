@@ -71,7 +71,6 @@ func alarmTriggered() {
     let alTime = Date()
     let failTime = alTime.addingTimeInterval(graceTime)
     print("Alarm triggered.. scheduling failure for \(failTime)")
-    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [alarm_id])
     scheduleFailure(date: failTime)
 }
 
