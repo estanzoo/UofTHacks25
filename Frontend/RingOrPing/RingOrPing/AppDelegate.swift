@@ -21,8 +21,25 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
         if notification.request.identifier == alarm_id{
-            alarmTriggered()
-            completionHandler([.alert, .sound])
+            var toRun: Bool = false
+            print("Alarm triggered...")
+            
+            let last = UserDefaults.standard.value(forKey: lastAlarmKey)
+            if let time = last as? Date {
+                print("... with time difference \(Date().timeIntervalSince(time))")
+                if Date().timeIntervalSince(time) > 10 {
+                    toRun = true
+                    UserDefaults.standard.set(Date(), forKey: lastAlarmKey)
+                }
+            } else {
+                toRun = true
+                UserDefaults.standard.set(Date(), forKey: lastAlarmKey)
+            }
+            
+            if toRun {
+                alarmTriggered()
+                completionHandler([.alert, .sound])
+            }
         }
         
         if notification.request.identifier == failureId {

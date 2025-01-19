@@ -71,21 +71,7 @@ func scheduleFailure(date: Date) {
 func alarmTriggered() {
     let alTime = Date()
     let failTime = alTime.addingTimeInterval(graceTime)
-    print("Alarm triggered...")
-    
-    let last = UserDefaults.standard.value(forKey: lastAlarmKey)
-    if let time = last as? Date {
-        print("... with time difference \(Date().timeIntervalSince(time))")
-        if Date().timeIntervalSince(time) > 10 {
-            print("... scheduling failure for \(failTime)")
-            scheduleFailure(date: failTime)
-            UserDefaults.standard.set(Date(), forKey: lastAlarmKey)
-        }
-    } else {
-        print("... scheduling failure for \(failTime)")
-        scheduleFailure(date: failTime)
-        UserDefaults.standard.set(Date(), forKey: lastAlarmKey)
-    }
+    scheduleFailure(date: failTime)
 }
 
 func failureTriggered() {
